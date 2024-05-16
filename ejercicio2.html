@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones con Números</title>
+</head>
+<body>
+    <script>
+        // Módulo de operaciones matemáticas
+        var OperacionesMatematicas = (function() {
+            // Función para sumar los números en un array
+            function sumarNumeros(numeros) {
+                return numeros.reduce((total, num) => total + num, 0);
+            }
+
+            // Función para contar los números primos en un array
+            function contarPrimos(numeros) {
+                var contador = 0;
+                for (var i = 0; i < numeros.length; i++) {
+                    if (esPrimo(numeros[i])) {
+                        contador++;
+                    }
+                }
+                return contador;
+            }
+
+            // Función para contar los números pares en un array
+            function contarPares(numeros) {
+                var contador = 0;
+                for (var i = 0; i < numeros.length; i++) {
+                    if (numeros[i] % 2 === 0) {
+                        contador++;
+                    }
+                }
+                return contador;
+            }
+
+            // Función para calcular el promedio de un array de números
+            function calcularPromedio(numeros) {
+                var suma = sumarNumeros(numeros);
+                return numeros.length === 0 ? 0 : suma / numeros.length;
+            }
+
+            // Función para verificar si un número es primo
+            function esPrimo(num) {
+                if (num <= 1) {
+                    return false;
+                }
+                for (var i = 2; i <= Math.sqrt(num); i++) {
+                    if (num % i === 0) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            // Exportar funciones públicas
+            return {
+                sumarNumeros: sumarNumeros,
+                contarPrimos: contarPrimos,
+                contarPares: contarPares,
+                calcularPromedio: calcularPromedio
+            };
+        })();
+
+        // Módulo de manejo de operaciones
+        var ManejoOperaciones = (function() {
+            // Función para solicitar números al usuario
+            function solicitarNumeros() {
+                var cantidad = parseInt(prompt("Ingrese la cantidad de números que desea ingresar:"));
+                var numeros = [];
+
+                for (var i = 0; i < cantidad; i++) {
+                    var num = parseInt(prompt("Ingrese el número " + (i + 1) + ":"));
+                    numeros.push(num);
+                }
+
+                return numeros;
+            }
+
+            // Función principal que maneja las operaciones
+            function manejarOperaciones() {
+                var numeros = solicitarNumeros();
+                var operacion = prompt("Seleccione la operación que desea realizar:\n" +
+                                        "a. Sumar los números\n" +
+                                        "b. Contar los números primos\n" +
+                                        "c. Contar los números pares\n" +
+                                        "d. Calcular el promedio de los números primos\n" +
+                                        "e. Calcular el promedio de los números pares");
+
+                switch (operacion.toLowerCase()) {
+                    case 'a':
+                        var suma = OperacionesMatematicas.sumarNumeros(numeros);
+                        alert("La suma de los números es: " + suma);
+                        break;
+                    case 'b':
+                        var contadorPrimos = OperacionesMatematicas.contarPrimos(numeros);
+                        alert("La cantidad de números primos es: " + contadorPrimos);
+                        break;
+                    case 'c':
+                        var contadorPares = OperacionesMatematicas.contarPares(numeros);
+                        alert("La cantidad de números pares es: " + contadorPares);
+                        break;
+                    case 'd':
+                        var primos = numeros.filter(num => OperacionesMatematicas.esPrimo(num));
+                        var promedioPrimos = OperacionesMatematicas.calcularPromedio(primos);
+                        alert("El promedio de los números primos es: " + promedioPrimos);
+                        break;
+                    case 'e':
+                        var pares = numeros.filter(num => num % 2 === 0);
+                        var promedioPares = OperacionesMatematicas.calcularPromedio(pares);
+                        alert("El promedio de los números pares es: " + promedioPares);
+                        break;
+                    default:
+                        alert("Operación no válida.");
+                }
+            }
+
+            // Exportar función pública
+            return {
+                manejarOperaciones: manejarOperaciones
+            };
+        })();
+
+        ManejoOperaciones.manejarOperaciones();
+    </script>
+</body>
+</html>

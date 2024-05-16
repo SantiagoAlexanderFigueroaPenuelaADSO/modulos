@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palabra Mayor</title>
+</head>
+<body>
+    <div>
+        <label for="wordInput">Ingrese una palabra:</label>
+        <input type="text" id="wordInput">
+        <button onclick="agregarPalabra()">Agregar</button>
+    </div>
+    <br>
+    <div>
+        <button onclick="mostrarPalabraMayor()">Encontrar Palabra Mayor</button>
+    </div>
+    
+    <ul id="palabrasList">
+        <!-- Aquí se mostrarán las palabras ingresadas -->
+    </ul>
+    
+    <p id="resultado">
+        <!-- Aquí se mostrará la palabra mayor -->
+    </p>
+
+    <script>
+        var palabras = [];
+
+        // Función para agregar una palabra al array
+        function agregarPalabra() {
+            var wordInput = document.getElementById("wordInput");
+            var palabra = wordInput.value.trim();
+            if (palabra !== "") {
+                palabras.push(palabra);
+                wordInput.value = "";
+                actualizarListaPalabras();
+            }
+        }
+
+        // Función para actualizar la lista de palabras en la página
+        function actualizarListaPalabras() {
+            var palabrasList = document.getElementById("palabrasList");
+            palabrasList.innerHTML = "";
+            palabras.forEach(function(palabra) {
+                var listItem = document.createElement("li");
+                listItem.textContent = palabra;
+                palabrasList.appendChild(listItem);
+            });
+        }
+
+        // Función para encontrar y mostrar la palabra mayor
+        function mostrarPalabraMayor() {
+            var palabraMayor = encontrarPalabraMayor(...palabras);
+            var resultado = document.getElementById("resultado");
+            resultado.textContent = "La palabra mayor es: " + palabraMayor;
+        }
+
+        // Función que recibe un número variable de palabras y encuentra la palabra mayor
+        function encontrarPalabraMayor(...palabras) {
+            if (palabras.length === 0) {
+                return "No se ingresaron palabras.";
+            }
+            return palabras.reduce((mayor, palabra) => palabra > mayor ? palabra : mayor, palabras[0]);
+        }
+    </script>
+</body>
+</html>

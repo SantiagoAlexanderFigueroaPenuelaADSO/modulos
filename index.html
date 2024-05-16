@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Tarjeta de Crédito</title>
+</head>
+<body>
+    <script>
+        function validarTarjeta() {
+            var tarjeta = prompt("Ingrese el número de su tarjeta de crédito:");
+            
+            // Verificar si el número de tarjeta tiene entre 13 y 16 dígitos
+            if (/^\d{13,16}$/.test(tarjeta)) {
+                // Verificar el tipo de tarjeta
+                if (/^3[47]\d{13}$/.test(tarjeta)) {
+                    alert("American Express");
+                } else if (/^30[0-5]|36|38\d{11}$/.test(tarjeta)) {
+                    alert("Diners Club");
+                } else if (/^6011\d{12}$/.test(tarjeta)) {
+                    alert("Discover");
+                } else if (/^5[1-5]\d{14}$/.test(tarjeta)) {
+                    alert("Mastercard");
+                } else if (/^4\d{15}$/.test(tarjeta)) {
+                    alert("Visa");
+                } else {
+                    alert("El tipo de tarjeta no pudo ser identificado.");
+                }
+            } else {
+                alert("El número de tarjeta debe tener entre 13 y 16 dígitos.");
+            }
+        }
+
+        validarTarjeta();
+    </script>
+</body>
+</html>
